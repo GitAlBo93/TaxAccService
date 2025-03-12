@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Container } from './styles/App.styles';
 import { Button } from '@admiral-ds/react-ui';
 
