@@ -1,6 +1,6 @@
 import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
 import { useNavigate } from 'react-router-dom';
-import { RouteEnum } from '../../utils/Routes';
+import { RouteEnum } from '../../app/routes';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const LoginPage = () => {
       </div>
       <div>
         <T font="Main/S">Ещё нет аккаунта?</T>
-        {/* Проверил переход, переделать под страницу регистрации */}
+        {/* TODO: переделать под страницу регистрации */}
         <Link appearance="primary" onClick={handleLogin}>
           Зарегистрироваться
         </Link>

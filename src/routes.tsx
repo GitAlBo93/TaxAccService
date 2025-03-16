@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MainLayout } from './Layouts/MainLayout';
+import { MainLayout } from './layouts/MainLayout';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { ServicesPage } from './pages/ServicesPage/ServicesPage';
-import { RouteEnum } from './utils/Routes';
+import { RouteEnum } from './app/routes';
 
 export const Router = createBrowserRouter([
   {

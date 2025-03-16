@@ -1,10 +1,10 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
+export default {
   entry: './src/index.tsx', // Точка входа
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
   },
   resolve: {
@@ -34,12 +34,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      favicon: 'src/assets/logo.svg',
+      favicon: 'src/assets/Logo_RNB.svg',
       template: './public/index.html', // Шаблон HTML
     }),
   ],
   devServer: {
-    static: path.join(__dirname, 'dist'),
+    static: path.join(process.cwd(), 'dist'),
     compress: true,
     port: 3001,
     hot: true,
