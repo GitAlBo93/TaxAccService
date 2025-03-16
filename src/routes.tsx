@@ -1,23 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import LoginPage from './pages/LoginPage/LoginPage';
-import ServicesPage from './pages/ServicesPage/ServicesPage';
+import { Layout } from './Layouts/Layout';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { ServicesPage } from './pages/ServicesPage/ServicesPage';
+import { RouteEnum } from './utils/Routes';
 
-const router = createBrowserRouter([
+export const Router = createBrowserRouter([
   {
-    path: '/',
+    path: RouteEnum.login,
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: RouteEnum.login,
         element: <LoginPage />,
       },
       {
-        path: '/services',
+        path: RouteEnum.services,
         element: <ServicesPage />,
       },
     ],
   },
 ]);
-
-export default router;

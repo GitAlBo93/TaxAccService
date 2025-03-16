@@ -1,22 +1,15 @@
-import logo from '../../assets/Logo_RNB.png';
-import React from 'react';
-import styled from 'styled-components';
+import logo from '../../assets/Logo_RNB.svg';
 import { Avatar } from '@admiral-ds/react-ui';
+import { Container } from './Header.styles';
 
-const Header: React.FC = () => {
+export const Header = () => {
+  // Временная заглушка, переделать позже с использованием redux
   const showAvatar = false;
-  const Logo = styled.img``;
-  const Container = styled.div`
-    margin: 10px 32px;
-    display: flex;
-    justify-content: space-between;
-  `;
 
   return (
     <Container>
-      <Logo src={logo} alt="logo3" />
+      <img src={logo} alt="logo" />
       {showAvatar && <Avatar userName="AvatarName" status="inactive" dimension="xs" />}
     </Container>
   );
 };
-export default Header;

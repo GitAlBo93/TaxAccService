@@ -1,15 +1,17 @@
 import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
 import { useNavigate } from 'react-router-dom';
+import { RouteEnum } from '../../utils/Routes';
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const navigate = useNavigate();
   const handleLogin = () => {
-    navigate('/services');
+    navigate(RouteEnum.services);
   };
+
   return (
     <div>
       <div>
-        <T font={'Main/XL'}>Добро пожаловать!</T>
+        <T font="Main/XL">Добро пожаловать!</T>
         <Field label="Имя пользователя" id="login">
           <TextInput id="login" placeholder="Имя" />
         </Field>
@@ -18,8 +20,11 @@ const LoginPage = () => {
         </Field>
       </div>
       <div>
-        <T font={'Main/S'}>Ещё нет аккаунта?</T>
-        <Link appearance="primary">Зарегистрироваться</Link>
+        <T font="Main/S">Ещё нет аккаунта?</T>
+        {/* Проверил переход, переделать под страницу регистрации */}
+        <Link appearance="primary" onClick={handleLogin}>
+          Зарегистрироваться
+        </Link>
       </div>
 
       <Button dimension="xl" appearance="primary" onClick={handleLogin}>
@@ -28,5 +33,3 @@ const LoginPage = () => {
     </div>
   );
 };
-
-export default LoginPage;
