@@ -1,5 +1,5 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
   entry: './src/index.tsx', // Точка входа
@@ -43,5 +43,6 @@ module.exports = {
     compress: true,
     port: 3001,
     hot: true,
+    historyApiFallback: true, // Все запросы будут перенаправляться на index.html
   },
 };

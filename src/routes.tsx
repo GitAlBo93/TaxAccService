@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './Layouts/Layout';
+import { MainLayout } from './Layouts/MainLayout';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { ServicesPage } from './pages/ServicesPage/ServicesPage';
 import { RouteEnum } from './utils/Routes';
 
 export const Router = createBrowserRouter([
   {
-    path: RouteEnum.login,
-    element: <Layout />,
+    path: RouteEnum.main,
+    element: <MainLayout />,
     children: [
       {
         path: RouteEnum.login,
