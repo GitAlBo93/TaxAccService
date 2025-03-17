@@ -1,6 +1,6 @@
 import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
 import { useNavigate } from 'react-router-dom';
-import { RouteEnum } from '../../app/routes';
+import { RouteEnum } from '../../app/constants';
 import { FormContainer, InputContainer, RegistrationContainer } from './LoginPage.styles';
 import { useForm } from 'react-hook-form';
 
