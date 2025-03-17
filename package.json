@@ -2,7 +2,6 @@
   "name": "supbrobus",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@admiral-ds/react-ui": "^8.38.0",
     "@reduxjs/toolkit": "^2.6.1",

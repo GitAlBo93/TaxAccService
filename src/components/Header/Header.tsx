@@ -3,7 +3,7 @@ import { Avatar } from '@admiral-ds/react-ui';
 import { Container } from './Header.styles';
 
 export const Header = () => {
-  // Временная заглушка, переделать позже с использованием redux
+  // TODO: переделать с использованием redux
   const showAvatar = false;
 
   return (

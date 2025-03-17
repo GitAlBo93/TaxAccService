@@ -1,35 +1,74 @@
 import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
 import { useNavigate } from 'react-router-dom';
 import { RouteEnum } from '../../app/routes';
+import { FormContainer, InputContainer, RegistrationContainer } from './LoginPage.styles';
+import { useForm } from 'react-hook-form';
+
+type LoginFormInputs = {
+  username: string;
+  password: string;
+};
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const handleLogin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
+
+  const handleLogin = (data: LoginFormInputs) => {
+    console.log(data);
     navigate(RouteEnum.services);
+  };
+  const handleRegistration = () => {
+    navigate(RouteEnum.registration);
   };
 
   return (
-    <div>
-      <div>
-        <T font="Main/XL">Добро пожаловать!</T>
-        <Field label="Имя пользователя" id="login">
-          <TextInput id="login" placeholder="Имя" />
+    <FormContainer onSubmit={handleSubmit(handleLogin)}>
+      <T font="Main/XL" color="Neutral/Neutral 90">
+        Добро пожаловать!
+      </T>
+      <InputContainer>
+        <Field label="Имя пользователя" id="username" color="Neutral/Neutral 50">
+          <TextInput
+            id="username"
+            placeholder="Имя"
+            color="Neutral/Neutral 90"
+            {...register('username', { required: 'Введите имя пользователя' })}
+          />
+          {errors.username && (
+            <T font="Body/Body 1 Short" color="Error/Error 40">
+              {errors.username.message}
+            </T>
+          )}
         </Field>
-        <Field label="Пароль" id="password">
-          <TextInput id="password" placeholder="Пароль" />
+        <Field label="Пароль" id="password" color="Neutral/Neutral 50">
+          <TextInput
+            id="password"
+            placeholder="Пароль"
+            color="Neutral/Neutral 90"
+            {...register('password', { required: 'Введите пароль' })}
+          />
+          {errors.password && (
+            <T font="Main/XS" color="Error/Error 40">
+              {errors.password.message}
+            </T>
+          )}
         </Field>
-      </div>
-      <div>
-        <T font="Main/S">Ещё нет аккаунта?</T>
-        {/* TODO: переделать под страницу регистрации */}
-        <Link appearance="primary" onClick={handleLogin}>
-          Зарегистрироваться
-        </Link>
-      </div>
-
-      <Button dimension="xl" appearance="primary" onClick={handleLogin}>
+        <RegistrationContainer>
+          <T font="Additional/XS" style={{ alignContent: 'center' }}>
+            Ещё нет аккаунта?
+          </T>
+          <Link appearance="primary" dimension="s" onClick={handleRegistration}>
+            Зарегистрироваться
+          </Link>
+        </RegistrationContainer>
+      </InputContainer>
+      <Button dimension="xl" appearance="primary" type="submit">
         Войти
       </Button>
-    </div>
+    </FormContainer>
   );
 };
