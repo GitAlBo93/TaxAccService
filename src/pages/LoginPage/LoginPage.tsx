@@ -33,10 +33,12 @@ export const LoginPage = () => {
       </T>
       <InputContainer>
         <Field label="Имя пользователя" id="username" color="Neutral/Neutral 50">
+          {/* TODO: переделать используя компонент Controller в следующей фиче */}
           <TextInput
             id="username"
             placeholder="Имя"
             color="Neutral/Neutral 90"
+            // TODO: переделать вывод ошибок в InputField в следующей фиче
             {...register('username', { required: 'Введите имя пользователя' })}
           />
           {errors.username && (
@@ -59,9 +61,11 @@ export const LoginPage = () => {
           )}
         </Field>
         <RegistrationLinkContainer>
+          {/* TODO: убрать инлайн стили в следующей фиче */}
           <T font="Additional/XS" style={{ alignContent: 'center' }}>
             Ещё нет аккаунта?
           </T>
+          {/* TODO: переделать компонент, что бы сразу переходил на страницу регистрации. */}
           <Link appearance="primary" dimension="s" onClick={handleRegistration}>
             Зарегистрироваться
           </Link>
