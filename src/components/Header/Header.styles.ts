@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   height: 48px;
   margin: 10px 32px;
   display: flex;
   justify-content: space-between;
 `;
-
-export { Container };

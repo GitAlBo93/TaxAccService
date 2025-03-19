@@ -1,10 +1,10 @@
 import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
 import { useNavigate } from 'react-router-dom';
 import { RouteEnum } from '../../app/constants';
-import { FormContainer, InputContainer, RegistrationContainer } from './LoginPage.styles';
+import { FormContainer, InputContainer, RegistrationLinkContainer } from './LoginPage.styles';
 import { useForm } from 'react-hook-form';
 
-type LoginFormInputs = {
+type LoginFormType = {
   username: string;
   password: string;
 };
@@ -15,9 +15,10 @@ export const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInputs>();
+  } = useForm<LoginFormType>();
 
-  const handleLogin = (data: LoginFormInputs) => {
+  const handleLogin = (data: LoginFormType) => {
+    // TODO: реализовать логику в следующей фиче
     console.log(data);
     navigate(RouteEnum.services);
   };
@@ -57,14 +58,14 @@ export const LoginPage = () => {
             </T>
           )}
         </Field>
-        <RegistrationContainer>
+        <RegistrationLinkContainer>
           <T font="Additional/XS" style={{ alignContent: 'center' }}>
             Ещё нет аккаунта?
           </T>
           <Link appearance="primary" dimension="s" onClick={handleRegistration}>
             Зарегистрироваться
           </Link>
-        </RegistrationContainer>
+        </RegistrationLinkContainer>
       </InputContainer>
       <Button dimension="xl" appearance="primary" type="submit">
         Войти

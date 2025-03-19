@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,14 +8,14 @@ const FormContainer = styled.form`
   gap: 20px;
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   width: 400px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
 
-const RegistrationContainer = styled.div`
+export const RegistrationLinkContainer = styled.div`
   width: 400px;
   height: 30px;
   display: flex;
@@ -23,5 +23,3 @@ const RegistrationContainer = styled.div`
   gap: 8px;
   justify-content: end;
 `;
-
-export { FormContainer, InputContainer, RegistrationContainer };
