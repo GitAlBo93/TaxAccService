@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './styles/App.styles';
 import { Button } from '@admiral-ds/react-ui';
 
-function App() {
+export function App() {
   return (
     <Container>
       <div>
@@ -12,5 +12,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;

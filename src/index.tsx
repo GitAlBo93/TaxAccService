@@ -1,25 +1,20 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import {
-  DropdownProvider,
-  FontsVTBGroup,
-  LIGHT_THEME,
-} from '@admiral-ds/react-ui';
+import { DropdownProvider, FontsVTBGroup, LIGHT_THEME } from '@admiral-ds/react-ui';
 import { ThemeProvider } from 'styled-components';
+import { Router } from './routes';
+import { RouterProvider } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <ThemeProvider theme={LIGHT_THEME}>
       <DropdownProvider>
         <FontsVTBGroup />
-        <App />
+        <RouterProvider router={Router} />
       </DropdownProvider>
     </ThemeProvider>
-  </React.StrictMode>,
+  </StrictMode>,
 );
