@@ -1,30 +1,12 @@
-import { Button, Field, Link, T, TextInput } from '@admiral-ds/react-ui';
-import { useNavigate } from 'react-router-dom';
+import { Button, InputField, Link, T } from '@admiral-ds/react-ui';
 import { RouteEnum } from '../../app/constants';
 import { FormContainer, InputContainer, RegistrationLinkContainer } from './LoginPage.styles';
-import { useForm } from 'react-hook-form';
-
-type LoginFormType = {
-  username: string;
-  password: string;
-};
+import { Controller } from 'react-hook-form';
+import { CenteredT } from '../../layouts/MainLayout/MainLayout.styles';
+import { useLoginForm } from './useLoginForm';
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormType>();
-
-  const handleLogin = (data: LoginFormType) => {
-    // TODO: реализовать логику в следующей фиче
-    console.log(data);
-    navigate(RouteEnum.services);
-  };
-  const handleRegistration = () => {
-    navigate(RouteEnum.registration);
-  };
+  const { handleSubmit, handleLogin, control, errors } = useLoginForm();
 
   return (
     <FormContainer onSubmit={handleSubmit(handleLogin)}>
@@ -32,41 +14,36 @@ export const LoginPage = () => {
         Добро пожаловать!
       </T>
       <InputContainer>
-        <Field label="Имя пользователя" id="username" color="Neutral/Neutral 50">
-          {/* TODO: переделать используя компонент Controller в следующей фиче */}
-          <TextInput
-            id="username"
-            placeholder="Имя"
-            color="Neutral/Neutral 90"
-            // TODO: переделать вывод ошибок в InputField в следующей фиче
-            {...register('username', { required: 'Введите имя пользователя' })}
-          />
-          {errors.username && (
-            <T font="Body/Body 1 Short" color="Error/Error 40">
-              {errors.username.message}
-            </T>
+        <Controller
+          name="username"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label="Имя пользователя"
+              placeholder="Имя"
+              status={errors.username ? 'error' : undefined}
+              extraText={errors.username?.message}
+            />
           )}
-        </Field>
-        <Field label="Пароль" id="password" color="Neutral/Neutral 50">
-          <TextInput
-            id="password"
-            placeholder="Пароль"
-            color="Neutral/Neutral 90"
-            {...register('password', { required: 'Введите пароль' })}
-          />
-          {errors.password && (
-            <T font="Main/XS" color="Error/Error 40">
-              {errors.password.message}
-            </T>
+        />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              type="password"
+              label="Пароль"
+              placeholder="Пароль"
+              status={errors.password ? 'error' : undefined}
+              extraText={errors.password?.message}
+            />
           )}
-        </Field>
+        />
         <RegistrationLinkContainer>
-          {/* TODO: убрать инлайн стили в следующей фиче */}
-          <T font="Additional/XS" style={{ alignContent: 'center' }}>
-            Ещё нет аккаунта?
-          </T>
-          {/* TODO: переделать компонент, что бы сразу переходил на страницу регистрации. */}
-          <Link appearance="primary" dimension="s" onClick={handleRegistration}>
+          <CenteredT font="Additional/XS">Ещё нет аккаунта?</CenteredT>
+          <Link appearance="primary" dimension="s" href={RouteEnum.registration}>
             Зарегистрироваться
           </Link>
         </RegistrationLinkContainer>
