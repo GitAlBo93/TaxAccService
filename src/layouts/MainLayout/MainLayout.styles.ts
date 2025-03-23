@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { T } from '@admiral-ds/react-ui';
 
 export const MainLayoutContainer = styled.div`
   display: flex;
@@ -13,8 +12,4 @@ export const OutletContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-export const CenteredT = styled(T)`
-  align-content: center;
 `;

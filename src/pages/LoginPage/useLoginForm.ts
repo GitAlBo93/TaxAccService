@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RouteEnum } from '../../app/constants';
-import { useLoginMutation } from '../../api/authApi';
+import { useLoginMutation } from '../../api/rootApi';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../slices/authSlice';
 
@@ -36,8 +36,7 @@ export const useLoginForm = () => {
   const handleLogin = async (data: LoginFormType) => {
     try {
       const response = await login(data).unwrap();
-      document.cookie = `token=${response.token}; path=/;`;
-      dispatch(setUser({ user: response.user, token: response.token }));
+      dispatch(setUser({ user: response.user }));
       navigate(RouteEnum.services);
     } catch (error) {
       console.error('Ошибка входа', error);

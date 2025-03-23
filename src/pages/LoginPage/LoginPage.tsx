@@ -2,7 +2,6 @@ import { Button, InputField, Link, T } from '@admiral-ds/react-ui';
 import { RouteEnum } from '../../app/constants';
 import { FormContainer, InputContainer, RegistrationLinkContainer } from './LoginPage.styles';
 import { Controller } from 'react-hook-form';
-import { CenteredT } from '../../layouts/MainLayout/MainLayout.styles';
 import { useLoginForm } from './useLoginForm';
 
 export const LoginPage = () => {
@@ -42,7 +41,7 @@ export const LoginPage = () => {
           )}
         />
         <RegistrationLinkContainer>
-          <CenteredT font="Additional/XS">Ещё нет аккаунта?</CenteredT>
+          <T font="Additional/XS">Ещё нет аккаунта?</T>
           <Link appearance="primary" dimension="s" href={RouteEnum.registration}>
             Зарегистрироваться
           </Link>
