@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { selectAuthData } from '../../app/selectors/selectAuthData';
 
 export const useHeader = () => {
-  const username = useSelector((state: RootState) => state.auth.user?.username);
+  const username = useSelector(selectAuthData);
 
   return { username };
 };
