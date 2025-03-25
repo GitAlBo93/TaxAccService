@@ -22,4 +22,5 @@ export const RegistrationLinkContainer = styled.div`
   flex-direction: row;
   gap: 8px;
   justify-content: end;
+  align-items: center;
 `;
