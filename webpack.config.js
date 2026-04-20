@@ -1,8 +1,10 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 export default {
   entry: './src/index.tsx', // Точка входа
+  target: 'web', // важно для HMR в браузере
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
@@ -14,7 +16,14 @@ export default {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true, // обязательно для React Refresh
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -37,6 +46,7 @@ export default {
       favicon: 'src/assets/Logo_RNB.svg',
       template: './public/index.html', // Шаблон HTML
     }),
+    new ReactRefreshWebpackPlugin(),
   ],
   devServer: {
     static: path.join(process.cwd(), 'dist'),
