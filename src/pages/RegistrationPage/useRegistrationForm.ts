@@ -18,6 +18,16 @@ type RegistrationFormType = {
 export const useRegistrationForm = () => {
   const dispatch = useDispatch();
   const [register, { isLoading, error }] = useRegisterMutation();
+  // const clearButtonProps = { 'data-testid': 'selectClearButton' };
+  // const openButtonProps = { 'data-testid': 'selectOpenButton' };
+  // const [selectValue, setSelectValue] = useState('');
+  //
+  // const onChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectValue(e.target.value);
+  //
+  // const handleSelectedChange = (value: string | Array<string>) => {
+  //   // eslint-disable-next-line no-console
+  //   console.log(value);
+  // };
   const schema = object().shape({
     username: string().required('Введите имя пользователя'),
     email: string().required('Введите email'),
@@ -54,3 +64,5 @@ export const useRegistrationForm = () => {
 
   return { control, handleSubmit, errors, handleRegister, isLoading, error };
 };
+
+// export const SelectRegistrationTemplate = ({ placecholder = 'TestPlacecholder', ...props }) => {};
