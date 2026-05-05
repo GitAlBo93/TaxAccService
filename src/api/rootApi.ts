@@ -18,6 +18,18 @@ interface LoginResponse {
   token: string;
 }
 
+interface RegisterRequest {
+  username: string;
+  password: string;
+  email: string;
+  role: string;
+}
+
+interface RegisterResponse {
+  user: User;
+  token: string;
+}
+
 export const rootApi = createApi({
   reducerPath: 'rootApi',
   // TODO: заменить baseUrl на переменную окружения
@@ -34,7 +46,18 @@ export const rootApi = createApi({
         },
       }),
     }),
+    register: builder.mutation<RegisterResponse, RegisterRequest>({
+      query: (credentials) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: credentials,
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = rootApi;
+export const { useLoginMutation, useRegisterMutation } = rootApi;
