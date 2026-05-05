@@ -1,6 +1,6 @@
 import { useRegisterMutation } from '../../api/rootApi';
 import { useDispatch } from 'react-redux';
-import { object, string } from 'yup';
+import { object, ref, string } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RouteEnum } from '../../app/constants';
 import { useNavigate } from 'react-router-dom';
@@ -18,21 +18,14 @@ type RegistrationFormType = {
 export const useRegistrationForm = () => {
   const dispatch = useDispatch();
   const [register, { isLoading, error }] = useRegisterMutation();
-  // const clearButtonProps = { 'data-testid': 'selectClearButton' };
-  // const openButtonProps = { 'data-testid': 'selectOpenButton' };
-  // const [selectValue, setSelectValue] = useState('');
-  //
-  // const onChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectValue(e.target.value);
-  //
-  // const handleSelectedChange = (value: string | Array<string>) => {
-  //   // eslint-disable-next-line no-console
-  //   console.log(value);
-  // };
+
   const schema = object().shape({
     username: string().required('Введите имя пользователя'),
-    email: string().required('Введите email'),
+    email: string().email('Не верный формат почты. Пример: user@example.com').required('Введите email'),
     password: string().required('Введите пароль'),
-    confirmPassword: string().required('Введите пароль ещё раз'),
+    confirmPassword: string()
+      .required('Введите пароль ещё раз')
+      .oneOf([ref('password'), ''], 'Пароли должны совпадать'),
     role: string().required('Выберите роль'),
   });
 
@@ -47,6 +40,7 @@ export const useRegistrationForm = () => {
       username: '',
       email: '',
       password: '',
+      confirmPassword: '',
       role: '',
     },
     resolver: yupResolver(schema),
@@ -54,7 +48,9 @@ export const useRegistrationForm = () => {
 
   const handleRegister = async (data: RegistrationFormType) => {
     try {
-      const response = await register(data).unwrap();
+      console.log(data);
+      const { confirmPassword, ...registrationData } = data;
+      const response = await register(registrationData).unwrap();
       dispatch(setUser({ user: response.user }));
       navigate(RouteEnum.services);
     } catch (error) {
@@ -64,5 +60,3 @@ export const useRegistrationForm = () => {
 
   return { control, handleSubmit, errors, handleRegister, isLoading, error };
 };
-
-// export const SelectRegistrationTemplate = ({ placecholder = 'TestPlacecholder', ...props }) => {};

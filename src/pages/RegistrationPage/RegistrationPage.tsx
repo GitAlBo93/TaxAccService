@@ -72,8 +72,8 @@ export const RegistrationPage = () => {
           control={control}
           render={({ field }) => (
             <SelectField {...field} placeholder="Да/Нет" label="Администратор?">
-              <Option value="yes">Да</Option>
-              <Option value="no">Нет</Option>
+              <Option value="admin">Да</Option>
+              <Option value="user">Нет</Option>
             </SelectField>
           )}
         />
