@@ -6,10 +6,3 @@ export const MainLayoutContainer = styled.div`
   //TODO: убрать высоту
   height: 100vh;
 `;
-
-export const OutletContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
