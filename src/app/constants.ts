@@ -5,4 +5,5 @@ export enum RouteEnum {
   login = '/',
   registration = '/registration',
   services = '/services',
+  expenses = '/expenses',
 }
