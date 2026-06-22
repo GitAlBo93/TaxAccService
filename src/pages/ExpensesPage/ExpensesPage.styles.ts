@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ExpensesPageConteiner = styled.div`
+export const ExpensesPageContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -13,7 +13,7 @@ export const HeaderExpensesPage = styled.div`
   padding: 20px 0;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* для вертикального центрирования */
+  align-items: center;
 `;
 
 export const HeaderLeftExpenses = styled.div`
@@ -38,7 +38,7 @@ export const ExpensesPageLayout = styled.div`
   border-radius: 8px;
 `;
 
-export const InformationTextConteiner = styled.div`
+export const InformationTextContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;

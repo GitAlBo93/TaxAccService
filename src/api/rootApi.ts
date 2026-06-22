@@ -57,7 +57,19 @@ export const rootApi = createApi({
         },
       }),
     }),
+    operations: builder.mutation({
+      query: (credentials) => ({
+        url: 'tax/operations',
+        method: 'POST',
+        body: credentials,
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-request-uuid': credentials.requestInfo.id,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = rootApi;
+export const { useLoginMutation, useRegisterMutation, useOperationsMutation } = rootApi;
