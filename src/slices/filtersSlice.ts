@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../app/store';
 
 export interface ExpenseFilters {
   clientId: string;
@@ -22,9 +23,6 @@ const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    applyFilters: (state, action: PayloadAction<ExpenseFilters>) => {
-      return action.payload;
-    },
     resetFilters: () => initialState,
     updateFilters: (state, action: PayloadAction<Partial<ExpenseFilters>>) => {
       return { ...state, ...action.payload };
@@ -32,5 +30,7 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { applyFilters, resetFilters, updateFilters } = filtersSlice.actions;
+export const selectFilters = (state: RootState) => state.filters;
+
+export const { resetFilters, updateFilters } = filtersSlice.actions;
 export default filtersSlice.reducer;

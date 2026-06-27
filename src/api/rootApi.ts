@@ -30,6 +30,89 @@ interface RegisterResponse {
   token: string;
 }
 
+// type InfoRequestType = {
+//   id: string;
+//   dateTime: string;
+//   sourceId: string;
+// };
+
+type PaginationOperationRequest = {
+  numberOfItemsPerPage: number;
+  currentPageNumber: number;
+};
+
+type SortingOperation = {
+  sortBy: string;
+  sortOrder: string;
+};
+
+interface OperationRequest {
+  clientId?: string;
+  clientContractId?: string;
+  assetId?: string;
+  startDate: string;
+  endDate: string;
+  status?: string;
+  pagination?: PaginationOperationRequest;
+  sorting?: SortingOperation;
+}
+
+interface Constraints {
+  parameter: string;
+  message: string;
+}
+
+type InfoResponseType = {
+  id: string;
+  dateTime: string;
+  sourceId: string;
+  code: number;
+  message: string;
+  constraints: Constraints[];
+};
+
+type ExpInfo = {
+  expId: number;
+  assetQty: number;
+  assetFactDate: string;
+  assetPriceValue?: number;
+  assetPriceCurr: string;
+  accruedCoupon?: number;
+  commValue?: number;
+  isIIS?: boolean;
+};
+
+type OperationInfoType = {
+  operId: string;
+  objectId?: string;
+  status: string;
+  buySell: string;
+  externalId?: string;
+  documentId?: string;
+  eventId?: number;
+  clientContractId?: string;
+  isIIS?: boolean;
+  clientId: string;
+  assetId: string;
+  assetName?: string;
+  isin?: string;
+  actualDate: string;
+  eventQty: number;
+  dealCode?: string;
+  expInfo?: ExpInfo[];
+};
+
+interface PaginationResponse extends PaginationOperationRequest {
+  totalAmountOfItems: number;
+  numberOfPages: number;
+}
+
+type OperationResponse = {
+  responseInfo: InfoResponseType;
+  operInfo: OperationInfoType[];
+  pagination: PaginationResponse;
+};
+
 export const rootApi = createApi({
   reducerPath: 'rootApi',
   // TODO: заменить baseUrl на переменную окружения
@@ -57,19 +140,30 @@ export const rootApi = createApi({
         },
       }),
     }),
-    operations: builder.mutation({
-      query: (credentials) => ({
-        url: 'tax/operations',
-        method: 'POST',
-        body: credentials,
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-request-uuid': credentials.requestInfo.id,
-        },
-      }),
+    operations: builder.query<OperationResponse, OperationRequest>({
+      query: (params) => {
+        const requestId = crypto.randomUUID();
+
+        return {
+          url: 'tax/operations',
+          method: 'POST',
+          body: {
+            ...params,
+            requestInfo: {
+              id: requestId,
+              dateTime: new Date().toISOString(),
+              sourceId: 'WEB_CLIENT',
+            },
+          },
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-request-uuid': requestId,
+          },
+        };
+      },
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useOperationsMutation } = rootApi;
+export const { useLoginMutation, useRegisterMutation, useLazyOperationsQuery } = rootApi;

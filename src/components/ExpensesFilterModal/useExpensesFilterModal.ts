@@ -1,12 +1,12 @@
 import { object, string } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { useOperationsMutation } from '../../api/rootApi';
-import { initialState, applyFilters, resetFilters } from '../../slices/filtersSlice';
-import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
+import { useLazyOperationsQuery } from '../../api/rootApi';
+import { initialState, updateFilters, resetFilters, selectFilters } from '../../slices/filtersSlice';
+import { useAppDispatch } from '../../app/hooks';
 
-type ExpensesFilterModalType = {
+type ExpensesFilterFormType = {
   clientId: string;
   clientContractId: string;
   assetId: string;
@@ -16,10 +16,10 @@ type ExpensesFilterModalType = {
 };
 
 export const useExpensesFilterModal = (onClose?: () => void) => {
-  const dispatch = useDispatch();
-  const [operations, { isLoading, error }] = useOperationsMutation();
+  const dispatch = useAppDispatch();
+  const [getOperations, { isLoading, error }] = useLazyOperationsQuery();
 
-  const savedFilters = useSelector((state: RootState) => state.filters);
+  const savedFilters = useSelector(selectFilters);
 
   const toISOFormat = (date: string, isEndOfDay: boolean = false) => {
     const [day, month, year] = date.split('.');
@@ -63,7 +63,7 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ExpensesFilterModalType>({
+  } = useForm<ExpensesFilterFormType>({
     defaultValues: savedFilters,
     resolver: yupResolver(shema),
   });
@@ -73,31 +73,26 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
     reset(initialState);
   };
 
-  const handleFilter = async (data: ExpensesFilterModalType) => {
-    const { endDate, startDate, ...children } = data;
-    const filteredChildren = Object.fromEntries(
-      Object.entries(children).filter(([, value]) => value !== '' && value !== null && value !== undefined),
+  const handleFiltersChange = async (formValues: ExpensesFilterFormType) => {
+    const { endDate, startDate, ...filters } = formValues;
+    const filteredFilters = Object.fromEntries(
+      Object.entries(filters).filter(([, value]) => value !== '' && value !== null && value !== undefined),
     );
     const filteredData = {
-      requestInfo: {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        dateTime: new Date(),
-        sourceId: 'WEB_CLIENT',
-      },
       startDate: toISOFormat(startDate, false),
       endDate: toISOFormat(endDate, true),
-      ...filteredChildren,
+      ...filteredFilters,
     };
 
     try {
-      dispatch(applyFilters(data));
-      const response = await operations(filteredData).unwrap();
+      dispatch(updateFilters(formValues));
+      const response = await getOperations(filteredData).unwrap();
       console.log(response);
       if (onClose) {
         onClose();
       }
     } catch (error) {
-      console.error('Ошибка регистрации: ', error);
+      console.error('Ошибка запроса модального окна "Фильтры": ', error);
     }
   };
 
@@ -105,8 +100,8 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
     control,
     errors,
     handleSubmit,
-    handleFilter,
-    reset: resetFiltersForm,
+    handleFiltersChange,
+    resetFiltersForm,
     savedFilters,
     isLoading,
     error,

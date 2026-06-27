@@ -12,17 +12,17 @@ import {
   CustomModal,
   CustomModalTitle,
   CustomSelectField,
-  ExpensesFilterModalConteiner,
+  ExpensesFilterModalContainer,
   overlayStyles,
 } from './ExpensesFilterModal.styles';
 import { ServiceCloseOutline } from '@admiral-ds/icons';
 
-interface FilterModalProps {
+// TODO: исправить типизацию Filters
+type FilterModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onApply: (filters: Filters) => void;
-  initialFilters: Filters | null;
-}
+};
 const stateOptions = [
   { value: 'New', name: 'Новый' },
   { value: 'Confirmed', name: 'Подтвержденный' },
@@ -30,7 +30,7 @@ const stateOptions = [
 ];
 
 export const ExpensesFilterModal: FC<FilterModalProps> = ({ onClose }) => {
-  const { control, errors, handleSubmit, handleFilter, reset } = useExpensesFilterModal(onClose);
+  const { control, errors, handleSubmit, handleFiltersChange, resetFiltersForm } = useExpensesFilterModal(onClose);
 
   const renderStateOptions = () => {
     return stateOptions.map((state, key) => (
@@ -47,7 +47,7 @@ export const ExpensesFilterModal: FC<FilterModalProps> = ({ onClose }) => {
         <ServiceCloseOutline width={24} onClick={onClose} />
       </ContainerHeader>
 
-      <ExpensesFilterModalConteiner onSubmit={handleSubmit(handleFilter)}>
+      <ExpensesFilterModalContainer onSubmit={handleSubmit(handleFiltersChange)}>
         <ContainerForm>
           <Controller
             name="clientId"
@@ -129,7 +129,7 @@ export const ExpensesFilterModal: FC<FilterModalProps> = ({ onClose }) => {
         </ContainerForm>
 
         <ContainerButton>
-          <Button dimension="l" appearance="secondary" onClick={() => reset()}>
+          <Button dimension="l" appearance="secondary" onClick={() => resetFiltersForm()}>
             Сбросить
           </Button>
           <Button dimension="l" appearance="secondary" onClick={onClose}>
@@ -139,7 +139,7 @@ export const ExpensesFilterModal: FC<FilterModalProps> = ({ onClose }) => {
             Применить
           </Button>
         </ContainerButton>
-      </ExpensesFilterModalConteiner>
+      </ExpensesFilterModalContainer>
     </CustomModal>
   );
 };

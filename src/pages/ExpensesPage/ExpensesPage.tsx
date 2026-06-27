@@ -16,17 +16,17 @@ import { Filters } from '../../components/ExpensesFilterModal/types';
 export const ExpensesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<Filters | null>(null);
-  const handleOpenModal = useCallback(() => {
+  const openFiltersModal = useCallback(() => {
     setIsModalOpen(true);
   }, []);
 
-  const handleCloseModal = useCallback(() => {
+  const closeFiltersModal = useCallback(() => {
     setIsModalOpen(false);
   }, []);
 
-  const handleApplyFilters = useCallback((filters: Filters) => {
-    setAppliedFilters(filters); // сохраняем фильтры
-    setIsModalOpen(false); // закрываем модалку
+  const applyFilters = useCallback((filters: Filters) => {
+    setAppliedFilters(filters);
+    setIsModalOpen(false);
   }, []);
 
   return (
@@ -42,7 +42,7 @@ export const ExpensesPage = () => {
           </T>
         </HeaderLeftExpenses>
         <HeaderRightExpenses>
-          <Button dimension="m" appearance="secondary" iconStart={<SystemFilterOutline />} onClick={handleOpenModal}>
+          <Button dimension="m" appearance="secondary" iconStart={<SystemFilterOutline />} onClick={openFiltersModal}>
             Фильтр
           </Button>
           <Button dimension="m" appearance="secondary" displayAsSquare iconStart={<SystemSettingsOutline />}></Button>
@@ -57,20 +57,11 @@ export const ExpensesPage = () => {
             </T>
           </InformationTextContainer>
 
-          <Button dimension="l" appearance="secondary" iconStart={<SystemFilterOutline />} onClick={handleOpenModal}>
+          <Button dimension="l" appearance="secondary" iconStart={<SystemFilterOutline />} onClick={openFiltersModal}>
             Фильтр
           </Button>
 
-          {isModalOpen ? (
-            <ExpensesFilterModal
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-              onApply={handleApplyFilters}
-              initialFilters={appliedFilters}
-            />
-          ) : (
-            <div></div>
-          )}
+          {isModalOpen && <ExpensesFilterModal isOpen={isModalOpen} onClose={closeFiltersModal} onApply={applyFilters} />}
         </ExpensesPageLayout>
       ) : (
         <Button onClick={() => setAppliedFilters(null)}>Тут должна быть таблица</Button>

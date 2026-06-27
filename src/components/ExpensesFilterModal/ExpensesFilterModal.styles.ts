@@ -14,7 +14,7 @@ export const CustomModalTitle = styled(ModalTitle)`
   padding: 0;
 `;
 
-export const ExpensesFilterModalConteiner = styled.form`
+export const ExpensesFilterModalContainer = styled.form`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
