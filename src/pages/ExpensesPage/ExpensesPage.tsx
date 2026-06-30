@@ -11,21 +11,18 @@ import { Link, T, Button } from '@admiral-ds/react-ui';
 import { RouteEnum } from '../../app/constants';
 import { ExpensesFilterModal } from '../../components/ExpensesFilterModal/ExpensesFilterModal';
 import { useCallback, useState } from 'react';
-import { Filters } from '../../components/ExpensesFilterModal/types';
+import { useSelector } from 'react-redux';
+import { getIsApplied } from '../../slices/filtersSlice';
 
 export const ExpensesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState<Filters | null>(null);
+  const isApplied = useSelector(getIsApplied);
+
   const openFiltersModal = useCallback(() => {
     setIsModalOpen(true);
   }, []);
 
   const closeFiltersModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
-  const applyFilters = useCallback((filters: Filters) => {
-    setAppliedFilters(filters);
     setIsModalOpen(false);
   }, []);
 
@@ -48,7 +45,7 @@ export const ExpensesPage = () => {
           <Button dimension="m" appearance="secondary" displayAsSquare iconStart={<SystemSettingsOutline />}></Button>
         </HeaderRightExpenses>
       </HeaderExpensesPage>
-      {appliedFilters === null ? (
+      {!isApplied ? (
         <ExpensesPageLayout>
           <InformationTextContainer>
             <ServiceInfoSolid width={24} />
@@ -56,16 +53,16 @@ export const ExpensesPage = () => {
               Для отображения информации уточните параметры поиска.
             </T>
           </InformationTextContainer>
-
           <Button dimension="l" appearance="secondary" iconStart={<SystemFilterOutline />} onClick={openFiltersModal}>
             Фильтр
           </Button>
-
-          {isModalOpen && <ExpensesFilterModal isOpen={isModalOpen} onClose={closeFiltersModal} onApply={applyFilters} />}
         </ExpensesPageLayout>
       ) : (
-        <Button onClick={() => setAppliedFilters(null)}>Тут должна быть таблица</Button>
+        <T font="Additional/XS" color="Neutral/Neutral 50">
+          Тут должна быть таблица с данными
+        </T>
       )}
+      {isModalOpen && <ExpensesFilterModal isOpen={isModalOpen} onClose={closeFiltersModal} />}
     </ExpensesPageContainer>
   );
 };

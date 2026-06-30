@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Button, Option } from '@admiral-ds/react-ui';
-import { Filters } from './types';
 import { Controller } from 'react-hook-form';
 import { useExpensesFilterModal } from './useExpensesFilterModal';
 import {
@@ -21,7 +20,6 @@ import { ServiceCloseOutline } from '@admiral-ds/icons';
 type FilterModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onApply: (filters: Filters) => void;
 };
 const stateOptions = [
   { value: 'New', name: 'Новый' },

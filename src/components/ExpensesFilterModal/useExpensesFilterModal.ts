@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
 import { useLazyOperationsQuery } from '../../api/rootApi';
-import { initialState, updateFilters, resetFilters, selectFilters } from '../../slices/filtersSlice';
+import { updateFilters, resetFilters, getFilters, initialFilters } from '../../slices/filtersSlice';
 import { useAppDispatch } from '../../app/hooks';
 
 type ExpensesFilterFormType = {
@@ -19,7 +19,7 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
   const dispatch = useAppDispatch();
   const [getOperations, { isLoading, error }] = useLazyOperationsQuery();
 
-  const savedFilters = useSelector(selectFilters);
+  const savedFilters = useSelector(getFilters);
 
   const toISOFormat = (date: string, isEndOfDay: boolean = false) => {
     const [day, month, year] = date.split('.');
@@ -70,7 +70,7 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
 
   const resetFiltersForm = () => {
     dispatch(resetFilters());
-    reset(initialState);
+    reset(initialFilters);
   };
 
   const handleFiltersChange = async (formValues: ExpensesFilterFormType) => {
