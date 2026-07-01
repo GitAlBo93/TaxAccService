@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { DateField, InputField, Modal, ModalTitle, SelectField } from '@admiral-ds/react-ui';
+import { colors } from '../../styles/colors';
 
 export const CustomModal = styled(Modal)`
   padding: 24px 32px;
@@ -34,7 +35,7 @@ export const ContainerButton = styled.div`
 `;
 
 export const overlayStyles = css`
-  background-color: rgba(100, 105, 115, 1);
+  background-color: ${colors.neutral60};
 `;
 export const ContainerHeader = styled.div`
   display: flex;

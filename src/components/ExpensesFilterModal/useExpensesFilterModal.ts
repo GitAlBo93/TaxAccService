@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
 import { useLazyOperationsQuery } from '../../api/rootApi';
-import { updateFilters, resetFilters, getFilters, initialFilters } from '../../slices/filtersSlice';
+import { updateFilters, getFilters, initialFilters } from '../../slices/filtersSlice';
 import { useAppDispatch } from '../../app/hooks';
 
 type ExpensesFilterFormType = {
@@ -69,7 +69,6 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
   });
 
   const resetFiltersForm = () => {
-    dispatch(resetFilters());
     reset(initialFilters);
   };
 
@@ -92,6 +91,7 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
         onClose();
       }
     } catch (error) {
+      // TODO: отобразить страницу с ошибкой или уведомление
       console.error('Ошибка запроса модального окна "Фильтры": ', error);
     }
   };
