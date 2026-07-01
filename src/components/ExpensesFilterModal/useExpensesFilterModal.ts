@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux';
 import { useLazyOperationsQuery } from '../../api/rootApi';
 import { updateFilters, getFilters, initialFilters } from '../../slices/filtersSlice';
 import { useAppDispatch } from '../../app/hooks';
+import { parse } from 'date-fns/parse';
+import { endOfDay } from 'date-fns/endOfDay';
+import { startOfDay } from 'date-fns/startOfDay';
 
 type ExpensesFilterFormType = {
   clientId: string;
@@ -22,13 +25,10 @@ export const useExpensesFilterModal = (onClose?: () => void) => {
   const savedFilters = useSelector(getFilters);
 
   const toISOFormat = (date: string, isEndOfDay: boolean = false) => {
-    const [day, month, year] = date.split('.');
-    const hours = isEndOfDay ? 23 : 0;
-    const minutes = isEndOfDay ? 59 : 0;
-    const seconds = isEndOfDay ? 59 : 0;
-    const utcTimestamp = Date.UTC(Number(year), Number(month) - 1, Number(day), hours, minutes, seconds);
+    const parsedDate = parse(date, 'dd.MM.yyyy', new Date());
+    const returnDate = isEndOfDay ? endOfDay(parsedDate) : startOfDay(parsedDate);
 
-    return new Date(utcTimestamp).toISOString();
+    return returnDate.toISOString();
   };
 
   const shema = object().shape({
