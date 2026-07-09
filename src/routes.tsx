@@ -4,6 +4,7 @@ import { LoginPage } from './pages/LoginPage/LoginPage';
 import { ServicesPage } from './pages/ServicesPage/ServicesPage';
 import { RouteEnum } from './app/constants';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
+import { ExpensesPage } from './pages/ExpensesPage/ExpensesPage';
 
 export const Router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const Router = createBrowserRouter([
       {
         path: RouteEnum.services,
         element: <ServicesPage />,
+      },
+      {
+        path: RouteEnum.expenses,
+        element: <ExpensesPage />,
       },
     ],
   },
